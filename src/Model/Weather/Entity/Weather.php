@@ -7,13 +7,13 @@ class Weather
 {
     private \DateTimeImmutable $date;
     private float $temperature;
-    private string $windDirection;
+    private float $windDirection;
     private float $windSpeed;
 
     public function __construct(
         \DateTimeImmutable $date,
         float $temperature,
-        string $windDirection,
+        float $windDirection,
         float $windSpeed
     )
     {
@@ -38,12 +38,12 @@ class Weather
         $this->temperature = $temperature;
     }
 
-    public function getWindDirection(): string
+    public function getWindDirection(): float
     {
         return $this->windDirection;
     }
 
-    public function setWindDirection(string $windDirection): void
+    public function setWindDirection(float $windDirection): void
     {
         $this->windDirection = $windDirection;
     }
