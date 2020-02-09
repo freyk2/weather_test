@@ -11,13 +11,12 @@ class Weather
     private float $windSpeed;
 
     public function __construct(
-        \DateTimeImmutable $date,
         float $temperature,
         float $windDirection,
         float $windSpeed
     )
     {
-        $this->date = $date;
+        $this->date = new \DateTimeImmutable('now');;
         $this->temperature = $temperature;
         $this->windDirection = $windDirection;
         $this->windSpeed = $windSpeed;

@@ -16,7 +16,6 @@ class WeatherbitWeatherLoader implements WeatherLoaderInterface
         $response = json_decode($contents, true);
 
         return new Weather(
-            new \DateTimeImmutable('now'),
             $response['data'][0]['temp'],
             $response['data'][0]['wind_dir'],
             $response['data'][0]['wind_spd']

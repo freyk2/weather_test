@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace App\Console;
 
+use App\Infrastructure\Model\Weather\RepositoryFactory;
 use App\Model\Weather\Entity\Weather;
+use App\Model\Weather\Repository\WeatherRepositoryInterface;
 use App\Model\Weather\UseCases\WeatherLoaderInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -13,11 +15,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 class LoadWeatherCommand extends Command
 {
     private WeatherLoaderInterface $loader;
+    private RepositoryFactory $factory;
 
-    public function __construct(WeatherLoaderInterface $loader)
+    public function __construct(WeatherLoaderInterface $loader, RepositoryFactory $factory)
     {
         parent::__construct();
         $this->loader = $loader;
+        $this->factory = $factory;
     }
 
     protected function configure(): void
@@ -29,11 +33,13 @@ class LoadWeatherCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-//        $fileType = $input->getArgument('type');
-//
-//        /** @var Weather $weather */
-//        $weather = $this->loader->load();
-//        $someRepository->add($weather);
+        /** @var WeatherRepositoryInterface $repository */
+        $repository = $this->factory->createRepository($input->getArgument('type'));
+
+        /** @var Weather $weather */
+        $weather = $this->loader->load();
+
+        $repository->add($weather);
 
         $output->writeln('<info>Done!</info>');
         return 0;
